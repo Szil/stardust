@@ -1,6 +1,6 @@
 package com.gitlab.szil.servlet.addressbook
 
-import com.gitlab.szil.servlet.addressbook.backend.Contact
+import com.gitlab.szil.model.Contact
 import com.vaadin.data.Binder
 import com.vaadin.data.converter.LocalDateToDateConverter
 import com.vaadin.event.ShortcutAction

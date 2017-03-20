@@ -1,6 +1,7 @@
 package com.gitlab.szil.servlet.addressbook
 
-import com.gitlab.szil.servlet.addressbook.backend.Contact
+import com.gitlab.szil.model.Contact
+import com.gitlab.szil.model.ContactEntity
 import com.gitlab.szil.servlet.addressbook.backend.ContactService
 import com.vaadin.annotations.Theme
 import com.vaadin.annotations.Title
@@ -37,7 +38,7 @@ class AddressbookUI : UI() {
          * to synchronously handle those events. Vaadin automatically sends only
          * the needed changes to the web page without loading a new page.
          */
-        newContact.addClickListener { _ -> contactForm.edit(Contact()) }
+        newContact.addClickListener { _ -> contactForm.edit(ContactEntity()) }
 
         filter.placeholder = "Filter contacts..."
         filter.addValueChangeListener { refreshContacts(it.value) }

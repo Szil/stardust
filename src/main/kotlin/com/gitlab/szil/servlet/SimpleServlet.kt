@@ -1,12 +1,13 @@
 package com.gitlab.szil.servlet
 
+import com.gitlab.szil.config.DatabaseConfig
 import com.gitlab.szil.servlet.addressbook.AddressbookUI
 import com.vaadin.annotations.VaadinServletConfiguration
 import com.vaadin.server.VaadinServlet
 import io.undertow.Handlers
 import io.undertow.Undertow
 import io.undertow.servlet.Servlets
-import org.slf4j.LoggerFactory
+import mu.KLogging
 import java.time.Duration
 import java.time.Instant
 import javax.servlet.annotation.WebServlet
@@ -17,13 +18,14 @@ import javax.servlet.annotation.WebServlet
 @WebServlet(urlPatterns = arrayOf("/*"))
 @VaadinServletConfiguration(ui = AddressbookUI::class, productionMode = false)
 class SimpleServlet : VaadinServlet() {
-    companion object Logger {
-        val logger = LoggerFactory.getLogger(SimpleServlet::class.java)!!
-    }
+    companion object : KLogging()
 }
 
 fun main(args: Array<String>) {
-    SimpleServlet.logger.info("init undertow servlet")
+    SimpleServlet.logger.info { "setting up database connection" }
+    DatabaseConfig()
+
+    SimpleServlet.logger.info { "init undertow servlet" }
     val startTime = Instant.now()
     val servletBuilder = Servlets.deployment().setClassLoader(SimpleServlet::class.java.classLoader)
             .setContextPath("/vaadin")
@@ -34,7 +36,7 @@ fun main(args: Array<String>) {
             )
 
     val manager = Servlets.defaultContainer().addDeployment(servletBuilder)
-    SimpleServlet.logger.info("Starting deployment")
+    SimpleServlet.logger.info { "Starting deployment" }
     manager.deploy()
 
     val path = Handlers.path(Handlers.redirect("/vaadin"))
@@ -46,5 +48,5 @@ fun main(args: Array<String>) {
             .build()
     server.start()
     val elapsedTime = Duration.between(startTime, Instant.now())
-    SimpleServlet.logger.info("Server started in ${elapsedTime.toMillis()} ms")
+    SimpleServlet.logger.info { "Server started in ${elapsedTime.toMillis()} ms" }
 }
