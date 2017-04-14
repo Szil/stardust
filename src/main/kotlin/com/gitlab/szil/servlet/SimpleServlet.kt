@@ -42,8 +42,8 @@ fun main(args: Array<String>) {
     val path = Handlers.path(Handlers.redirect("/vaadin"))
             .addPrefixPath("/vaadin", manager.start())
 
-    val envPort = System.getenv("PORT")
-    val port = envPort as Int
+    val envPort : String = System.getenv("PORT")
+    val port = envPort.toInt()
 
     val server = Undertow.builder()
             .addHttpListener(port, "0.0.0.0")
