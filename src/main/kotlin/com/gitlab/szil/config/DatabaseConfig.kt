@@ -1,6 +1,7 @@
 package com.gitlab.szil.config
 
 import com.gitlab.szil.model.Models
+import com.gitlab.szil.servlet.SimpleServlet
 import com.heroku.sdk.jdbc.DatabaseUrl
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
@@ -31,10 +32,12 @@ class DatabaseConfig {
         val config = HikariConfig()
 
         if (local) {
+            SimpleServlet.logger.info { "Setting up database using local config" }
             config.jdbcUrl = "jdbc:postgresql://localhost/vertx"
             config.username = "vertx"
             config.password = "qwert"
         } else {
+            SimpleServlet.logger.info { "Setting up database using Heroku config" }
             var databaseUrl = DatabaseUrl.extract(local)
             config.jdbcUrl = databaseUrl.jdbcUrl()
             config.username = databaseUrl.username()
@@ -58,9 +61,7 @@ class DatabaseConfig {
     }
 
     companion object {
-
         val data = DatabaseConfig().dataSource
-
     }
 
 }
