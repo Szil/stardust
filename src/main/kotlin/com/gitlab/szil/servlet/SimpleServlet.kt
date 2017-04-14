@@ -44,7 +44,7 @@ fun main(args: Array<String>) {
 
     val envPort : String? = System.getenv("PORT")
     val port = envPort?.toInt() ?: 8080
-    val host = "localhost"
+    val host = "0.0.0.0"
 
     val server = Undertow.builder()
             .addHttpListener(port, host)
