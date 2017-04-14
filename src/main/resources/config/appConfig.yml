@@ -1,0 +1,7 @@
+hikarucp:
+  jdbcUrl: jdbc:postgresql://localhost/vertx
+  username: vertx
+  password: qwert
+
+undertow:
+  port: 8080

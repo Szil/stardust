@@ -1,5 +1,6 @@
 package com.gitlab.szil.servlet
 
+import com.gitlab.szil.config.ApplicationConfig
 import com.gitlab.szil.config.DatabaseConfig
 import com.gitlab.szil.servlet.addressbook.AddressbookUI
 import com.vaadin.annotations.VaadinServletConfiguration
@@ -22,7 +23,8 @@ class SimpleServlet : VaadinServlet() {
 }
 
 fun main(args: Array<String>) {
-    SimpleServlet.logger.info { "setting up database connection" }
+    ApplicationConfig()
+    /*SimpleServlet.logger.info { "setting up database connection" }
     DatabaseConfig()
 
     SimpleServlet.logger.info { "init undertow servlet" }
@@ -32,7 +34,7 @@ fun main(args: Array<String>) {
             .setDeploymentName("simple.war")
             .addServlet(
                     Servlets.servlet("SimpleServlet", SimpleServlet::class.java)
-                            .addMapping("/*")
+                            .addMapping("*//*")
             )
 
     val manager = Servlets.defaultContainer().addDeployment(servletBuilder)
@@ -48,5 +50,5 @@ fun main(args: Array<String>) {
             .build()
     server.start()
     val elapsedTime = Duration.between(startTime, Instant.now())
-    SimpleServlet.logger.info { "Server started in ${elapsedTime.toMillis()} ms" }
+    SimpleServlet.logger.info { "Server started in ${elapsedTime.toMillis()} ms" }*/
 }

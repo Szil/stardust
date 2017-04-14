@@ -73,6 +73,14 @@ dependencies {
     compile 'io.requery:requery:1.2.0'
     compile 'io.requery:requery-kotlin:1.2.0'
     kapt 'io.requery:requery-processor:1.2.0'
+
+    // Config
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.8.8'
+    compile group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-yaml', version: '2.8.8'
+    compile group: 'com.fasterxml.jackson.module', name: 'jackson-module-kotlin', version: '2.8.8'
+
+    // Heroku
+    compile group: 'com.heroku.sdk', name: 'heroku-jdbc', version: '0.1.1'
 }
 
 task wrapper(type: Wrapper) {
@@ -81,4 +89,8 @@ task wrapper(type: Wrapper) {
 
 shadowJar {
     dependsOn(build)
+}
+
+task stage {
+    dependsOn(installShadowApp)
 }

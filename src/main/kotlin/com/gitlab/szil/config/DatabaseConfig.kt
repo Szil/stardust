@@ -1,6 +1,7 @@
 package com.gitlab.szil.config
 
 import com.gitlab.szil.model.Models
+import com.heroku.sdk.jdbc.DatabaseUrl
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
 import io.requery.Persistable
@@ -24,10 +25,14 @@ class DatabaseConfig {
     }
 
     fun initDataSource(): DataSource {
+        val local = "cedar-14" != System.getenv("STACK")
+
+        var databaseUrl = DatabaseUrl.extract(local)
+
         val config = HikariConfig()
-        config.jdbcUrl = "jdbc:postgresql://localhost/vertx"
-        config.username = "vertx"
-        config.password = "qwert"
+        config.jdbcUrl = databaseUrl.jdbcUrl()
+        config.username = databaseUrl.username()
+        config.password = databaseUrl.password()
         config.addDataSourceProperty("cachePrepStmts", "true")
         config.addDataSourceProperty("prepStmtCacheSize", "250")
         config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048")
