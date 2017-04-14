@@ -25,7 +25,8 @@ class DatabaseConfig {
     }
 
     fun initDataSource(): DataSource {
-        val local = "cedar-14" != System.getenv("STACK")
+        val stack = System.getenv("STACK")
+        val local = "cedar-14" != stack || "cedar-16" != stack
 
         var databaseUrl = DatabaseUrl.extract(local)
 
