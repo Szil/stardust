@@ -16,7 +16,7 @@ import javax.sql.DataSource
  */
 class DatabaseConfig {
 
-    val envVar = "DATABASE_URL"
+    val envVar = "JDBC_DATABASE_URL"
 
     val dataSource: KotlinEntityDataStore<Persistable>
     val logger = SimpleServlet.logger()
