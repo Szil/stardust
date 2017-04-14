@@ -15,8 +15,8 @@ import javax.sql.DataSource
  */
 class DatabaseConfig {
 
-    val dataSource : KotlinEntityDataStore<Persistable>
-    
+    val dataSource: KotlinEntityDataStore<Persistable>
+
     init {
         val ds = initDataSource()
         val configuration = KotlinConfiguration(dataSource = ds, model = Models.DEFAULT)
@@ -28,12 +28,18 @@ class DatabaseConfig {
         val stack = System.getenv("STACK")
         val local = "cedar-14" != stack || "cedar-16" != stack
 
-        var databaseUrl = DatabaseUrl.extract(local)
-
         val config = HikariConfig()
-        config.jdbcUrl = databaseUrl.jdbcUrl()
-        config.username = databaseUrl.username()
-        config.password = databaseUrl.password()
+
+        if (local) {
+            config.jdbcUrl = "jdbc:postgresql://localhost/vertx"
+            config.username = "vertx"
+            config.password = "qwert"
+        } else {
+            var databaseUrl = DatabaseUrl.extract(local)
+            config.jdbcUrl = databaseUrl.jdbcUrl()
+            config.username = databaseUrl.username()
+        }
+
         config.addDataSourceProperty("cachePrepStmts", "true")
         config.addDataSourceProperty("prepStmtCacheSize", "250")
         config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048")

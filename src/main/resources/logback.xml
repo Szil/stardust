@@ -8,9 +8,10 @@
     </appender>
 
     <logger name="com.gitlab.szil" level="TRACE"/>
-    <logger name="io.undertow" level="WARN"/>
+    <logger name="io.undertow" level="DEBUG"/>
+    <logger name="com.zaxxer.hikari.pool.HikariPool" level="WARN"/>
 
-    <root level="debug">
+    <root level="WARN">
         <appender-ref ref="STDOUT" />
     </root>
 </configuration>

@@ -28,28 +28,30 @@ fun main(args: Array<String>) {
     SimpleServlet.logger.info { "init undertow servlet" }
     val startTime = Instant.now()
     val servletBuilder = Servlets.deployment().setClassLoader(SimpleServlet::class.java.classLoader)
-            .setContextPath("/vaadin")
+            .setContextPath("/simple")
             .setDeploymentName("simple.war")
             .addServlet(
                     Servlets.servlet("SimpleServlet", SimpleServlet::class.java)
-                            .addMapping("")
+                            .addMapping("/*")
             )
 
     val manager = Servlets.defaultContainer().addDeployment(servletBuilder)
     SimpleServlet.logger.info { "Starting deployment" }
     manager.deploy()
 
-    val path = Handlers.path(Handlers.redirect("/vaadin"))
-            .addPrefixPath("/vaadin", manager.start())
+    val path = Handlers.path(Handlers.redirect("/simple"))
+            .addPrefixPath("/simple", manager.start())
 
-    val envPort : String = System.getenv("PORT")
-    val port = envPort.toInt()
+    val envPort : String? = System.getenv("PORT")
+    val port = envPort?.toInt() ?: 8080
+    val host = "localhost"
 
     val server = Undertow.builder()
-            .addHttpListener(port, "0.0.0.0")
+            .addHttpListener(port, host)
             .setHandler(path)
             .build()
     server.start()
+    SimpleServlet.logger.info { "Server running on $port port and host: $host" }
     val elapsedTime = Duration.between(startTime, Instant.now())
     SimpleServlet.logger.info { "Server started in ${elapsedTime.toMillis()} ms" }
 }

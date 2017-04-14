@@ -10,7 +10,7 @@ buildscript {
 }
 
 plugins {
-    id 'fi.jasoft.plugin.vaadin' version '1.1.6'
+    id 'fi.jasoft.plugin.vaadin' version '1.1.9'
     id 'com.github.johnrengelman.shadow' version '1.2.4'
     id "org.jetbrains.kotlin.kapt" version "1.1.1"
 }
@@ -26,10 +26,6 @@ mainClassName = "com.gitlab.szil.servlet.SimpleServletKt"
 
 repositories {
     mavenCentral()
-}
-
-kapt {
-    generateStubs = true
 }
 
 // Add kapt directory to sources
@@ -48,8 +44,8 @@ dependencies {
     compile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
 
     // HTTP/Servlet
-    compile group: 'io.undertow', name: 'undertow-core', version: '1.4.11.Final'
-    compile group: 'io.undertow', name: 'undertow-servlet', version: '1.4.11.Final'
+    compile group: 'io.undertow', name: 'undertow-core', version: '1.4.12.Final'
+    compile group: 'io.undertow', name: 'undertow-servlet', version: '1.4.12.Final'
 
     // Logging
     compile 'io.github.microutils:kotlin-logging:1.4.3'
@@ -59,9 +55,9 @@ dependencies {
     compile group: 'commons-beanutils', name: 'commons-beanutils', version: '1.9.3'
 
     // Shadow vaadin
-    shadow group: 'com.vaadin', name: 'vaadin-server', version: '8.0.3'
-    shadow group: 'com.vaadin', name: 'vaadin-client-compiled', version: '8.0.3'
-    shadow group: 'com.vaadin', name: 'vaadin-themes', version: '8.0.3'
+    shadow group: 'com.vaadin', name: 'vaadin-server', version: '8.0.5'
+    shadow group: 'com.vaadin', name: 'vaadin-client-compiled', version: '8.0.5'
+    shadow group: 'com.vaadin', name: 'vaadin-themes', version: '8.0.5'
 
     // Database
     //compile group: 'org.hibernate', name: 'hibernate-core', version: '5.2.9.Final'
