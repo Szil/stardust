@@ -17,6 +17,7 @@ import javax.sql.DataSource
 class DatabaseConfig {
 
     val dataSource: KotlinEntityDataStore<Persistable>
+    val logger = SimpleServlet.logger()
 
     init {
         val ds = initDataSource()
@@ -27,17 +28,18 @@ class DatabaseConfig {
 
     fun initDataSource(): DataSource {
         val stack = System.getenv("STACK")
+        logger.info { "Stack: $stack" }
         val local = "cedar-14" != stack || "cedar-16" != stack
 
         val config = HikariConfig()
 
         if (local) {
-            SimpleServlet.logger.info { "Setting up database using local config" }
+            logger.info { "Setting up database using local config" }
             config.jdbcUrl = "jdbc:postgresql://localhost/vertx"
             config.username = "vertx"
             config.password = "qwert"
         } else {
-            SimpleServlet.logger.info { "Setting up database using Heroku config" }
+            logger.info { "Setting up database using Heroku config" }
             var databaseUrl = DatabaseUrl.extract(local)
             config.jdbcUrl = databaseUrl.jdbcUrl()
             config.username = databaseUrl.username()
