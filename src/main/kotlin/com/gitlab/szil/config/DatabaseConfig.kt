@@ -16,6 +16,8 @@ import javax.sql.DataSource
  */
 class DatabaseConfig {
 
+    val envVar = "DATABASE_URL"
+
     val dataSource: KotlinEntityDataStore<Persistable>
     val logger = SimpleServlet.logger()
 
@@ -27,9 +29,9 @@ class DatabaseConfig {
     }
 
     fun initDataSource(): DataSource {
-        val stack = System.getenv("STACK")
-        logger.info { "Stack: $stack" }
-        val local = "cedar-14" != stack || "cedar-16" != stack
+        val jdbcUrl = System.getenv(envVar)
+        logger.info { "JdbcUrl: $jdbcUrl" }
+        val local = jdbcUrl == null
 
         val config = HikariConfig()
 
@@ -40,9 +42,7 @@ class DatabaseConfig {
             config.password = "qwert"
         } else {
             logger.info { "Setting up database using Heroku config" }
-            var databaseUrl = DatabaseUrl.extract(local)
-            config.jdbcUrl = databaseUrl.jdbcUrl()
-            config.username = databaseUrl.username()
+            config.jdbcUrl = jdbcUrl
         }
 
         config.addDataSourceProperty("cachePrepStmts", "true")
