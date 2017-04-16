@@ -2,7 +2,6 @@ package com.gitlab.szil.config
 
 import com.gitlab.szil.model.Models
 import com.gitlab.szil.servlet.SimpleServlet
-import com.heroku.sdk.jdbc.DatabaseUrl
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
 import io.requery.Persistable

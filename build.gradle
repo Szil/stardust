@@ -1,5 +1,8 @@
 buildscript {
     ext.kotlin_version = '1.1.1'
+    ext.vaadin_version = '8.0.5'
+    ext.requery_version = '1.3.0'
+    ext.undertow_version = '1.4.12.Final'
 
     repositories {
         mavenCentral()
@@ -44,8 +47,8 @@ dependencies {
     compile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
 
     // HTTP/Servlet
-    compile group: 'io.undertow', name: 'undertow-core', version: '1.4.12.Final'
-    compile group: 'io.undertow', name: 'undertow-servlet', version: '1.4.12.Final'
+    compile group: 'io.undertow', name: 'undertow-core', version: "$undertow_version"
+    compile group: 'io.undertow', name: 'undertow-servlet', version: "$undertow_version"
 
     // Logging
     compile 'io.github.microutils:kotlin-logging:1.4.3'
@@ -55,9 +58,12 @@ dependencies {
     compile group: 'commons-beanutils', name: 'commons-beanutils', version: '1.9.3'
 
     // Shadow vaadin
-    shadow group: 'com.vaadin', name: 'vaadin-server', version: '8.0.5'
-    shadow group: 'com.vaadin', name: 'vaadin-client-compiled', version: '8.0.5'
-    shadow group: 'com.vaadin', name: 'vaadin-themes', version: '8.0.5'
+    shadow group: 'com.vaadin', name: 'vaadin-server', version: "$vaadin_version"
+    shadow group: 'com.vaadin', name: 'vaadin-client-compiled', version: "$vaadin_version"
+    shadow group: 'com.vaadin', name: 'vaadin-themes', version: "$vaadin_version"
+
+    // Vaadin push support
+    compile group: 'com.vaadin', name: 'vaadin-push', version: "$vaadin_version"
 
     // Database
     //compile group: 'org.hibernate', name: 'hibernate-core', version: '5.2.9.Final'
@@ -66,9 +72,9 @@ dependencies {
     compile group: 'com.zaxxer', name: 'HikariCP', version: '2.6.1'
     compile group: 'org.postgresql', name: 'postgresql', version: '42.0.0'
     compile group: 'org.flywaydb', name: 'flyway-core', version: '4.1.2'
-    compile 'io.requery:requery:1.2.0'
-    compile 'io.requery:requery-kotlin:1.2.0'
-    kapt 'io.requery:requery-processor:1.2.0'
+    compile group: 'io.requery', name: 'requery', version: "$requery_version"
+    compile group: 'io.requery', name: 'requery-kotlin', version: "$requery_version"
+    kapt group: 'io.requery', name: 'requery-processor', version: "$requery_version"
 
     // Config
     //compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.8.8'
@@ -76,7 +82,7 @@ dependencies {
     //compile group: 'com.fasterxml.jackson.module', name: 'jackson-module-kotlin', version: '2.8.8'
 
     // Heroku
-    compile group: 'com.heroku.sdk', name: 'heroku-jdbc', version: '0.1.1'
+    //compile group: 'com.heroku.sdk', name: 'heroku-jdbc', version: '0.1.1'
 }
 
 task wrapper(type: Wrapper) {

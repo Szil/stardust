@@ -15,7 +15,7 @@ import javax.servlet.annotation.WebServlet
 /**
  * Created by Szilank on 18/03/2017.
  */
-@WebServlet(urlPatterns = arrayOf("/*"))
+@WebServlet(value = "/*", asyncSupported = true)
 @VaadinServletConfiguration(ui = AddressbookUI::class, productionMode = false)
 class SimpleServlet : VaadinServlet() {
     companion object : KLogging()
