@@ -1,8 +1,8 @@
-package com.gitlab.szil.servlet.addressbook
+package com.github.szil.stardust.servlet.addressbook
 
-import com.gitlab.szil.model.Contact
-import com.gitlab.szil.model.ContactEntity
-import com.gitlab.szil.servlet.addressbook.backend.ContactService
+import com.github.szil.stardust.model.Contact
+import com.github.szil.stardust.model.ContactEntity
+import com.github.szil.stardust.servlet.addressbook.backend.ContactService
 import com.vaadin.annotations.Theme
 import com.vaadin.annotations.Title
 import com.vaadin.data.provider.ListDataProvider
@@ -22,8 +22,6 @@ class AddressbookUI : UI() {
     val newContact: Button = Button("New Contact")
 
     val contactForm: ContactForm = ContactForm()
-
-    val service: ContactService = ContactService.createDemoService()
 
     override fun init(request: VaadinRequest?) {
         configureComponents()
@@ -58,7 +56,7 @@ class AddressbookUI : UI() {
     }
 
     fun refreshContacts(stringFilter: String) {
-        contactList.dataProvider = ListDataProvider(service.findAll(stringFilter))
+        contactList.dataProvider = ListDataProvider(ContactService.findAll(stringFilter))
         contactForm.isVisible = false
     }
 

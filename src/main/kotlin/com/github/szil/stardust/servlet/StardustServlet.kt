@@ -1,7 +1,8 @@
-package com.gitlab.szil.servlet
+package com.github.szil.stardust.servlet
 
-import com.gitlab.szil.config.DatabaseConfig
-import com.gitlab.szil.servlet.addressbook.AddressbookUI
+import com.github.szil.stardust.config.DatabaseContext
+import com.github.szil.stardust.servlet.addressbook.AddressbookUI
+import com.github.szil.stardust.servlet.addressbook.backend.ContactService
 import com.vaadin.annotations.VaadinServletConfiguration
 import com.vaadin.server.VaadinServlet
 import io.undertow.Handlers
@@ -17,30 +18,30 @@ import javax.servlet.annotation.WebServlet
  */
 @WebServlet(value = "/*", asyncSupported = true)
 @VaadinServletConfiguration(ui = AddressbookUI::class, productionMode = false)
-class SimpleServlet : VaadinServlet() {
+class StardustServlet : VaadinServlet() {
     companion object : KLogging()
 }
 
 fun main(args: Array<String>) {
-    SimpleServlet.logger.info { "setting up database connection" }
-    DatabaseConfig()
+    DatabaseContext.runFlywayMigration()
+    ContactService.insertDummyData()
 
-    SimpleServlet.logger.info { "init undertow servlet" }
+    StardustServlet.logger.info { "init undertow servlet" }
     val startTime = Instant.now()
-    val servletBuilder = Servlets.deployment().setClassLoader(SimpleServlet::class.java.classLoader)
-            .setContextPath("/simple")
-            .setDeploymentName("simple.war")
+    val servletBuilder = Servlets.deployment().setClassLoader(StardustServlet::class.java.classLoader)
+            .setContextPath("/app")
+            .setDeploymentName("stardust.war")
             .addServlet(
-                    Servlets.servlet("SimpleServlet", SimpleServlet::class.java)
+                    Servlets.servlet("StardustServlet", StardustServlet::class.java)
                             .addMapping("/*")
             )
 
     val manager = Servlets.defaultContainer().addDeployment(servletBuilder)
-    SimpleServlet.logger.info { "Starting deployment" }
+    StardustServlet.logger.info { "Starting deployment" }
     manager.deploy()
 
-    val path = Handlers.path(Handlers.redirect("/simple"))
-            .addPrefixPath("/simple", manager.start())
+    val path = Handlers.path(Handlers.redirect("/app"))
+            .addPrefixPath("/app", manager.start())
 
     val envPort : String? = System.getenv("PORT")
     val port = envPort?.toInt() ?: 8080
@@ -51,7 +52,7 @@ fun main(args: Array<String>) {
             .setHandler(path)
             .build()
     server.start()
-    SimpleServlet.logger.info { "Server running on $port port and host: $host" }
+    StardustServlet.logger.info { "Server running on $port port and host: $host" }
     val elapsedTime = Duration.between(startTime, Instant.now())
-    SimpleServlet.logger.info { "Server started in ${elapsedTime.toMillis()} ms" }
+    StardustServlet.logger.info { "Server started in ${elapsedTime.toMillis()} ms" }
 }

@@ -1,6 +1,7 @@
-package com.gitlab.szil.servlet.addressbook
+package com.github.szil.stardust.servlet.addressbook
 
-import com.gitlab.szil.model.Contact
+import com.github.szil.stardust.model.Contact
+import com.github.szil.stardust.servlet.addressbook.backend.ContactService
 import com.vaadin.data.Binder
 import com.vaadin.data.converter.LocalDateToDateConverter
 import com.vaadin.event.ShortcutAction
@@ -51,10 +52,10 @@ class ContactForm : FormLayout() {
             binder.writeBean(contact)
 
             // Save DAO to backend with direct synchronous service API
-            ui!!.service.save(contact!!)
-
+            ContactService.save(contact!!)
             Notification.show("Saved '${contact!!.firstName} ${contact!!.lastName}'.", Notification.Type.TRAY_NOTIFICATION)
             ui!!.refreshContacts()
+
         } catch (ex: Exception) {
             // handle1
         }

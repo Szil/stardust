@@ -1,4 +1,4 @@
-package com.gitlab.szil.model
+package com.github.szil.stardust.model
 
 import io.requery.*
 import java.util.*
