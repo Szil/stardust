@@ -12,6 +12,7 @@
 hs_err_pid*
 
 build
+classes
 .gradle
 .idea
 out
@@ -20,3 +21,6 @@ out
 *.iws
 .env
 .DS_Store
+
+# Jrebel
+rebel.xml

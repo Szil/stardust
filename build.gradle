@@ -19,7 +19,7 @@ plugins {
     id "org.zeroturnaround.gradle.jrebel" version "1.1.5"
 }
 
-group 'com.gitlab.szil'
+group 'com.github.szil'
 version '1.0-SNAPSHOT'
 
 apply plugin: 'kotlin'
